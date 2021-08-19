@@ -1,3 +1,0 @@
-jdbc:mysql://kjc0411.cafe24.com
-kjc0411
-ksmart37!!
