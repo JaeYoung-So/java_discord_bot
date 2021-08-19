@@ -18,7 +18,7 @@ public class Main extends ListenerAdapter{
     public static JDA jda;
     public static void main(String[] args) throws LoginException {
         //토큰 연결 구문
-        jda = JDABuilder.createDefault("ODc3MTQ4MDY2MzI1NjA2NDIw.YRuZyw.Wj2yvxnzBEFP7GZ4uftkKIrYquA").build();
+        jda = JDABuilder.createDefault(System.getenv("token")).build();
         //현재 상태 구문
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         //현재상태창 구문
