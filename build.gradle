@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral() // for transitive dependencies
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation("net.dv8tion:JDA:4.3.0_309")
+}
+
+test {
+    useJUnitPlatform()
+}
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+/*
+jar{
+    manifest {
+        attributes 'Class-Path' : 'libs/','Main-Class':'src.main.java.kgun.Main'
+    }
+}*/
