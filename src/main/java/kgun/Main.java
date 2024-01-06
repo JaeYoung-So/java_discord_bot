@@ -5,8 +5,10 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 import java.util.Random;
@@ -18,21 +20,24 @@ public class Main extends ListenerAdapter{
     public static JDA jda;
     public static void main(String[] args) throws LoginException {
 
-        String token = System.getenv("token");
+
+        String token = "";
+
         //토큰 연결 구문
-        jda = JDABuilder.createDefault(token).build();
+        jda = JDABuilder.createDefault(token) // enable all default intents
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT) // also enable privileged intent
+                .addEventListeners(new Main())
+                .build();
+
         //현재 상태 구문
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         //현재상태창 구문
         jda.getPresence().setActivity(Activity.playing("WACCA Reverse"));
-        //메인 연결구문
-        jda.addEventListener(new Main());
-
 
     }
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
-        //사용자의 명령어를 저장함
         String[] args = event.getMessage().getContentRaw().split(" ");
 
         //명령어 시작 구문
@@ -54,7 +59,8 @@ public class Main extends ListenerAdapter{
                 info.setFooter("이 사람에 의해 만들어짐",event.getMember().getUser().getAvatarUrl());
 
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage(info.build()).queue();
+                event.getChannel().sendMessageEmbeds(info.build()).queue();
+                //event.getChannel().sendMessage("test").queue();
                 info.clear();
             }
             //때리기 작동
@@ -63,7 +69,7 @@ public class Main extends ListenerAdapter{
                 EmbedBuilder info = new EmbedBuilder();
                 info.setImage("https://media.discordapp.net/attachments/877518846733455370/877527899593400350/icon_28_2.png");
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage(info.build()).queue();
+                event.getChannel().sendMessageEmbeds(info.build()).queue();
                 info.clear();
             }
             //풀콤보
@@ -72,7 +78,7 @@ public class Main extends ListenerAdapter{
                 EmbedBuilder info = new EmbedBuilder();
                 info.setImage("https://cdn.discordapp.com/attachments/877518846733455370/878654360777810010/unknown.png");
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage(info.build()).queue();
+                event.getChannel().sendMessageEmbeds(info.build()).queue();
                 info.clear();
             }
             if(args[0].equals(prefix + "귀여워")){
@@ -80,7 +86,7 @@ public class Main extends ListenerAdapter{
                 EmbedBuilder info = new EmbedBuilder();
                 info.setImage("https://cdn.discordapp.com/attachments/877518846733455370/878655806684405790/dccon.png");
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage(info.build()).queue();
+                event.getChannel().sendMessageEmbeds(info.build()).queue();
                 info.clear();
             }
             if(args[0].equals(prefix + "죽여라")){
@@ -88,7 +94,7 @@ public class Main extends ListenerAdapter{
                 EmbedBuilder info = new EmbedBuilder();
                 info.setImage("https://cdn.discordapp.com/attachments/379594106667663360/878662841366904882/12.jpg");
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage(info.build()).queue();
+                event.getChannel().sendMessageEmbeds(info.build()).queue();
                 info.clear();
             }
             //왓카는 재밌다 출력프로그램
@@ -130,7 +136,7 @@ public class Main extends ListenerAdapter{
                     info.setTitle("사직서 양식");
                     info.setImage("https://media.discordapp.net/attachments/877518846733455370/877527969994793000/1629289362885.jpg?width=481&height=676");
                     event.getChannel().sendTyping().queue();
-                    event.getChannel().sendMessage(info.build()).queue();
+                    event.getChannel().sendMessageEmbeds(info.build()).queue();
                     info.clear();
                 }
 
@@ -151,7 +157,7 @@ public class Main extends ListenerAdapter{
                     info.setFooter("이 사람에 의해 소환됨",event.getMember().getUser().getAvatarUrl());
                     info.setImage("https://media.discordapp.net/attachments/877518846733455370/877519290935418891/image0.png?width=1077&height=676");
                     event.getChannel().sendTyping().queue();
-                    event.getChannel().sendMessage(info.build()).queue();
+                    event.getChannel().sendMessageEmbeds(info.build()).queue();
                 }
                 else if(args[1].equals("릴리")){
                     info.setTitle("⭐ 왓카 네비게이터 정보⭐");
@@ -161,7 +167,7 @@ public class Main extends ListenerAdapter{
                     info.setFooter("이 사람에 의해 소환됨",event.getMember().getUser().getAvatarUrl());
                     info.setImage("https://media.discordapp.net/attachments/877518846733455370/877519303413469194/image0.png?width=1077&height=676");
                     event.getChannel().sendTyping().queue();
-                    event.getChannel().sendMessage(info.build()).queue();
+                    event.getChannel().sendMessageEmbeds(info.build()).queue();
                 }
                 else if(args[1].equals("룬")){
                     info.setTitle("⭐ 왓카 네비게이터 정보⭐");
@@ -171,7 +177,7 @@ public class Main extends ListenerAdapter{
                     info.setFooter("이 사람에 의해 소환됨",event.getMember().getUser().getAvatarUrl());
                     info.setImage("https://media.discordapp.net/attachments/877518846733455370/877519312917762088/image0.png?width=1077&height=676");
                     event.getChannel().sendTyping().queue();
-                    event.getChannel().sendMessage(info.build()).queue();
+                    event.getChannel().sendMessageEmbeds(info.build()).queue();
                 }
                 else {
                     event.getChannel().sendMessage("네비게이터가 존재하지 않습니다.").queue();
@@ -181,5 +187,6 @@ public class Main extends ListenerAdapter{
             }
 
         }
-    }
+    }        //사용자의 명령어를 저장함
+
 }
